@@ -55,5 +55,7 @@ public class View {
     public void onDraw() {
         System.out.println("View (" + mName + "): " + mModel.getData());
     }
-
+    public void update() {
+     
+    }
 }
