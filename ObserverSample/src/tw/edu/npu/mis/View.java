@@ -56,6 +56,6 @@ public class View {
         System.out.println("View (" + mName + "): " + mModel.getData());
     }
     public void update() {
-     
+     invalidate();
     }
 }
