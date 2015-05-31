@@ -34,12 +34,23 @@ import java.util.ArrayList;
  */
 public class Subject {
     ArrayList<Observer> mObserver = new ArrayList<Observer>();
+    /**
+     *  o add observer ArrayList
+     */
     public void attach(Observer o){
         mObserver.add(o);
     }
+    
+    /**
+     *  o remove observer ArrayList
+     */
     public void detach(Observer o){
         mObserver.remove(o);
     }
+    
+     /**
+     *  run upDate
+     */
     public void notifyObserver(){
         for(Observer observer:mObserver){
             observer.Update();
