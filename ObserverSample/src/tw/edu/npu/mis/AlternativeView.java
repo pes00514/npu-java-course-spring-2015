@@ -29,7 +29,7 @@ package tw.edu.npu.mis;
  *
  * @author user
  */
-public class AlternativeView implements Observer,View {
+public abstract class AlternativeView extends View implements Observer {
     
     private final String mName;
     private final Window mWindow;
