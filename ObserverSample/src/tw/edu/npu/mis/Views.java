@@ -29,37 +29,6 @@ package tw.edu.npu.mis;
  *
  * @author user
  */
-public abstract class AlternativeView extends View implements Observer {
-    
-    private final String mName;
-    private final Window mWindow;
-    private final Model mModel;
-
-    public AlternativeView(String name, Window window, Model model) {
-        
-        mName = name;
-        mWindow = window;
-        mModel = model;
-        mModel.Add(this);
-    }
-
-    public void invalidate() {
-        mWindow.schduleRedraw(this);
-    }
-
-    /**
-     * Show the content of the model on the console.
-     */
-    public void onDraw() {
-        System.out.println("AlternativeView (" + mName + "): " + new StringBuilder(mModel.getData()).reverse());
-    }
-
-    @Override
-    public void update() {
-        invalidate();
-    }
-
-   
-   
-    
+public interface Views {
+    void onDraw();
 }

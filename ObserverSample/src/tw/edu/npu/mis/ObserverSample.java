@@ -25,6 +25,7 @@
  */
 package tw.edu.npu.mis;
 
+import static java.awt.SystemColor.window;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +41,14 @@ public class ObserverSample {
         Window window = new Window();
         Model model = new Model();
         Controller controller = new Controller(model);
-        List<View> views = new ArrayList<>();
-        views.add(new View("View 1", window, model));
-        views.add(new View("View 2", window, model));
-        views.add(new View("View 3", window, model));
-        views.add(new AlternativeView("AlternativeView", window, model));
+        List<views> views = new ArrayList<>();
+        views.add((views) new View("View 1", window, model));
+        views.add((views) new View("View 2", window, model));
+        views.add((views) new View("View 3", window, model));
+        views.add(new AlternativeView("AlternativeView", window, model) {
+            　
+            
+        })
 
         // Start the event loop.
         window.startEventLoop(controller, views);
