@@ -53,8 +53,12 @@ public class Model extends Subject{
         notifyObserver();
     }
 
+    /**
+     * 
+     * let AlternativeView know Model add 
+     */
     void add(AlternativeView aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

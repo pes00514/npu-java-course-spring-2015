@@ -35,7 +35,10 @@ import java.util.Scanner;
 public class Controller {
 
     private final Model mModel;
-
+/**
+ * Controller Constructors
+ *  let Controller know Model method and attribute
+ */
     public Controller(Model model) {
         mModel = model;
     }
