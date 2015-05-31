@@ -28,6 +28,7 @@ package tw.edu.npu.mis;
 /**
  *
  * @author user
+ * add new method onDraw
  */
 public interface Views {
     void onDraw();

@@ -36,6 +36,11 @@ public class View {
     private final Window mWindow;
     private final Model mModel;
 
+   /**
+   * View Constructors
+   * let class View know Model,Window method and attribute
+   * mModel join observer ArrayList
+   */
     public View(String name, Window window, Model model) {
         mName = name;
         mWindow = window;
@@ -55,6 +60,10 @@ public class View {
     public void onDraw() {
         System.out.println("View (" + mName + "): " + mModel.getData());
     }
+    
+    /**
+    *  call windows upDate
+    */
     public void update() {
      invalidate();
     }
