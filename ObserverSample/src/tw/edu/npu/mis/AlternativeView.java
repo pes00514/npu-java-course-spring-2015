@@ -35,16 +35,22 @@ public abstract class AlternativeView extends View implements Observer {
     private final Window mWindow;
     private final Model mModel;
 
+    /**
+     *
+     * @param name
+     * @param window
+     * @param model
+     */
     public AlternativeView(String name, Window window, Model model) {
         
         mName = name;
         mWindow = window;
         mModel = model;
-        mModel.Add(this);
+        mModel.add(this);
     }
 
     public void invalidate() {
-        mWindow.schduleRedraw(this);
+        mWindow.schduleRedraw((Views) this);
     }
 
     /**
