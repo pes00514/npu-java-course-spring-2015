@@ -26,19 +26,161 @@ public class CalculatorView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        jTextField1 = new javax.swing.JTextField();
+        CLEAR_ENTRY = new javax.swing.JButton();
+        CLEAR = new javax.swing.JButton();
+        BACKSPACE = new javax.swing.JButton();
+        OVER = new javax.swing.JButton();
+        SEVEN = new javax.swing.JButton();
+        EIGHT = new javax.swing.JButton();
+        NINE = new javax.swing.JButton();
+        TIMES = new javax.swing.JButton();
+        FOUR = new javax.swing.JButton();
+        FIVE = new javax.swing.JButton();
+        SIX = new javax.swing.JButton();
+        MINUS = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        TWO = new javax.swing.JButton();
+        THREE = new javax.swing.JButton();
+        PLUS = new javax.swing.JButton();
+        PLUS_MINUS = new javax.swing.JButton();
+        ZERO = new javax.swing.JButton();
+        DOT = new javax.swing.JButton();
+        EQUAL = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jTextField1.setText("0");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(jTextField1, gridBagConstraints);
+
+        CLEAR_ENTRY.setText("CE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(CLEAR_ENTRY, gridBagConstraints);
+
+        CLEAR.setText("C");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(CLEAR, gridBagConstraints);
+
+        BACKSPACE.setText("←");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(BACKSPACE, gridBagConstraints);
+
+        OVER.setText("÷");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(OVER, gridBagConstraints);
+
+        SEVEN.setText("7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(SEVEN, gridBagConstraints);
+
+        EIGHT.setText("8");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(EIGHT, gridBagConstraints);
+
+        NINE.setText("9");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(NINE, gridBagConstraints);
+
+        TIMES.setText("×");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(TIMES, gridBagConstraints);
+
+        FOUR.setText("4");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(FOUR, gridBagConstraints);
+
+        FIVE.setText("5");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(FIVE, gridBagConstraints);
+
+        SIX.setText("6");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(SIX, gridBagConstraints);
+
+        MINUS.setText("-");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(MINUS, gridBagConstraints);
+
+        jButton13.setText("1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(jButton13, gridBagConstraints);
+
+        TWO.setText("2");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(TWO, gridBagConstraints);
+
+        THREE.setText("3");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(THREE, gridBagConstraints);
+
+        PLUS.setText("+");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(PLUS, gridBagConstraints);
+
+        PLUS_MINUS.setText("±");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(PLUS_MINUS, gridBagConstraints);
+
+        ZERO.setText("0");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(ZERO, gridBagConstraints);
+
+        DOT.setText(".");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(DOT, gridBagConstraints);
+
+        EQUAL.setText("=");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(EQUAL, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -79,5 +221,26 @@ public class CalculatorView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BACKSPACE;
+    private javax.swing.JButton CLEAR;
+    private javax.swing.JButton CLEAR_ENTRY;
+    private javax.swing.JButton DOT;
+    private javax.swing.JButton EIGHT;
+    private javax.swing.JButton EQUAL;
+    private javax.swing.JButton FIVE;
+    private javax.swing.JButton FOUR;
+    private javax.swing.JButton MINUS;
+    private javax.swing.JButton NINE;
+    private javax.swing.JButton OVER;
+    private javax.swing.JButton PLUS;
+    private javax.swing.JButton PLUS_MINUS;
+    private javax.swing.JButton SEVEN;
+    private javax.swing.JButton SIX;
+    private javax.swing.JButton THREE;
+    private javax.swing.JButton TIMES;
+    private javax.swing.JButton TWO;
+    private javax.swing.JButton ZERO;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
