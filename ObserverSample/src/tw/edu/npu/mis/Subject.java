@@ -26,34 +26,38 @@
 package tw.edu.npu.mis;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- *
+ *  加入View方法 attach
+ *  移除View方法 detach
+ *   檢查有無內容 notifyObserver
  * @author STP
  */
 public class Subject {
-    ArrayList<Observer> mObserver = new ArrayList<Observer>();
-    /**
+    List<AllView> allview = new ArrayList<>();
+    /**加入view
      *  o add observer ArrayList
      */
-    public void attach(Observer o){
-        mObserver.add(o);
+    public void attach(AllView o){
+        allview.add(o);
     }
     
-    /**
+    /**移除view
      *  o remove observer ArrayList
      */
-    public void detach(Observer o){
-        mObserver.remove(o);
+    public void detach(AllView o){
+        allview.remove(o);
     }
     
-     /**
+     /**檢查有沒有內容
      *  run upDate
      */
     public void notifyObserver(){
-        for(Observer observer:mObserver){
-            observer.Update();
+        for(AllView o : allview)
+        {
+            o.upData();
         }
     
     }

@@ -25,21 +25,24 @@
  */
 package tw.edu.npu.mis;
 
-/**
+/**名稱屬性 Window類別 Model類別
+ * 加入顯示排程的方法 invalidate
+ * 文字反向輸出onDraw
+ * 
  *
  * @author user
  */
-public abstract class AlternativeView extends View implements Observer {
+public class AlternativeView extends AbstractView {
     
     private final String mName;
     private final Window mWindow;
     private final Model mModel;
 
     /**
-     *
-     * @param name
-     * @param window
-     * @param model
+     *AlternatioveView建構值
+     * @param name 傳入名稱
+     * @param window 傳入Window類別
+     * @param model 傳入Model類別
      */
     public AlternativeView(String name, Window window, Model model) {
         
@@ -48,22 +51,20 @@ public abstract class AlternativeView extends View implements Observer {
         mModel = model;
         mModel.add(this);
     }
-
+/**
+ * 加入顯示的排程
+ */
     public void invalidate() {
-        mWindow.schduleRedraw((Views) this);
+        mWindow.schduleRedraw(this);
     }
 
-    /**
+    /**文字反向輸出
      * Show the content of the model on the console.
      */
     public void onDraw() {
         System.out.println("AlternativeView (" + mName + "): " + new StringBuilder(mModel.getData()).reverse());
     }
 
-    @Override
-    public void update() {
-        invalidate();
-    }
 
    
    

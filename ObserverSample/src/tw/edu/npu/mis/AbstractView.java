@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, Samael Wang <freesamael@gmail.com>
+ * Copyright (c) 2015, user
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,15 @@
 package tw.edu.npu.mis;
 
 /**
- * The domain model.
- *
- * @author Samael Wang <freesamael@gmail.com>
+ *更新資料upData
+ * 實作 AllView 和 Showable
+ * @author user
  */
-public class Model extends Subject{
-
-    private String mData;
-
-    /**
-     * Get model content.
-     *傳出內容
-     * @return {@link String}
-     */
-    public String getData() {
-        return mData;
+public abstract class AbstractView implements AllView,Showable{
+    
+    abstract void invalidate();
+    
+    public void upData() {
+        invalidate();
     }
-
-    /**
-     * Update model.
-     *顯示資料
-     * 檢查有沒有內容
-     * @param data A {@link String} data.
-     */
-    public void setData(String data) {
-        mData = data;
-        this.notifyObserver();
-    }
-
-  
-
 }

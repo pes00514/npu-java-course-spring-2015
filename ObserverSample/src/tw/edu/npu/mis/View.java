@@ -45,13 +45,15 @@ public class View {
         mName = name;
         mWindow = window;
         mModel = model;
+        mModel.attach(this);
+        
     }
 
     /**
      * Invalidate the view, which indicates it needs to be redrawn later.
      */
     public void invalidate() {
-        mWindow.schduleRedraw((Views) this);
+        mWindow.schduleRedraw(this);
     }
 
     /**
