@@ -66,10 +66,15 @@ public class View extends AbstractView{
         System.out.println("View (" + mName + "): " + mModel.getData());
     }
     
-    /**
+   /* /**
     *  call windows upDate
     */
     public void update() {
      invalidate();
+    }
+
+    @Override
+    public void upData() {
+        invalidate();
     }
 }

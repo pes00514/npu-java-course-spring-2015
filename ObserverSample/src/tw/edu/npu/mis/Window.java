@@ -26,6 +26,7 @@
 package tw.edu.npu.mis;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ import java.util.List;
 public class Window {
 
     private Controller mController;
-    private List<Showable> mInvalidViews;
+    private List<Showable> mInvalidViews = new ArrayList<>();
 
     /**
      * Start the event loop.
@@ -45,6 +46,7 @@ public class Window {
      */
     public void startEventLoop(Controller c) {
         mController = c;
+        
        
 
         // Simulate how an event loop works.
@@ -64,7 +66,7 @@ public class Window {
      * @param v View to redraw.
      */
     public void schduleRedraw(Showable v) {
-       
+    
             mInvalidViews.add(v);
     }
 }
