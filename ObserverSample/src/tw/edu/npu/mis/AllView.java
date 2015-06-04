@@ -26,10 +26,10 @@
 package tw.edu.npu.mis;
 
 /**
- *
+ *更新資料方法的介面
  * @author user
- * add new method onDraw
  */
-public interface Views {
-    void onDraw();
+public interface AllView {
+    
+    public void upData();
 }

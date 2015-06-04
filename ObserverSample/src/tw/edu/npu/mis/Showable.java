@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, STP
+ * Copyright (c) 2015, user
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,9 @@
 package tw.edu.npu.mis;
 
 /**
- *
- * @author STP
- * have upDate way
+ *文字反向輸出的方法
+ * @author user
  */
-public interface Observer {
-   public void Update();
+public interface Showable {
+     public void onDraw();
 }
