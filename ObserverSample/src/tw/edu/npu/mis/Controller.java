@@ -38,6 +38,7 @@ public class Controller {
 /**
  * Controller Constructors
  *  let Controller know Model method and attribute
+     * @param model 傳入Model類別
  */
     public Controller(Model model) {
         mModel = model;

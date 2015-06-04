@@ -33,7 +33,7 @@ package tw.edu.npu.mis;
 public abstract class AbstractView implements AllView,Showable{
     
     abstract void invalidate();
-    
+    @Override
     public void upData() {
         invalidate();
     }

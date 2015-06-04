@@ -25,7 +25,7 @@
  */
 package tw.edu.npu.mis;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -36,23 +36,22 @@ import java.util.List;
 public class Window {
 
     private Controller mController;
-    private List<Views> mInvalidViews;
+    private List<Showable> mInvalidViews;
 
     /**
      * Start the event loop.
      *
      * @param c The controller.
-     * @param views The views to draw on the first loop.
      */
-    public void startEventLoop(Controller c, List<Views> views) {
+    public void startEventLoop(Controller c) {
         mController = c;
-        mInvalidViews = new ArrayList<>(views);
+       
 
         // Simulate how an event loop works.
         while (true) {
             
             mController.readInput();
-            for (Views v : mInvalidViews) {
+            for (Showable v : mInvalidViews) {
                 v.onDraw();
             }
             mInvalidViews.clear();
@@ -64,9 +63,9 @@ public class Window {
      *
      * @param v View to redraw.
      */
-    public void schduleRedraw(Views v) {
-       if(!mInvalidViews.contains(v)){
+    public void schduleRedraw(Showable v) {
+       
             mInvalidViews.add(v);
     }
 }
-}
+

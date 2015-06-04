@@ -49,7 +49,7 @@ public class AlternativeView extends AbstractView {
         mName = name;
         mWindow = window;
         mModel = model;
-        mModel.add(this);
+        mModel.attach(this);
     }
 /**
  * 加入顯示的排程

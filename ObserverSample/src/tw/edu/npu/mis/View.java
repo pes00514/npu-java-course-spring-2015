@@ -30,13 +30,16 @@ package tw.edu.npu.mis;
  *
  * @author Samael Wang <freesamael@gmail.com>
  */
-public class View {
+public class View extends AbstractView{
 
     private final String mName;
     private final Window mWindow;
     private final Model mModel;
 
    /**
+   * @param name 傳入要取的名稱
+   * @param window 傳入Window類別
+   * @param model 傳入Model類別
    * View Constructors
    * let class View know Model,Window method and attribute
    * mModel join observer ArrayList
