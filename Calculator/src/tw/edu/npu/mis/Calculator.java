@@ -1,14 +1,14 @@
-﻿/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package tw.edu.npu.mis;
-
+import java.util.Observable;
 /**
  * The model class of the calculator application.
  */
-public class Calculator {
+public class Calculator extends Observable{
 
     int operator = 0;//數字
     double operand1;//運算的第一個數字

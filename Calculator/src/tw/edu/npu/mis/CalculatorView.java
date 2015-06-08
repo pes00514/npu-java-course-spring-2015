@@ -1,28 +1,27 @@
-﻿/*
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
-/*
- * CalculatorView.java
- *
- * Created on Feb 14, 2010, 9:18:44 AM
- */
+
 package tw.edu.npu.mis;
 
 import java.text.DecimalFormat;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author STP
  */
-public class CalculatorView extends javax.swing.JFrame {
+public class CalculatorView extends javax.swing.JFrame implements Observer{
 
     /**
      * Creates new form CalculatorView
      */
     public CalculatorView() {
         initComponents();
+        
     }
 
     /**
@@ -667,5 +666,10 @@ public class CalculatorView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel resultLabel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
