@@ -9,7 +9,10 @@ package tw.edu.npu.mis;
  * The model class of the calculator application.
  */
 public class Calculator {
-    
+    int operator=0;//數字
+    double operand1;//運算的第一個數字
+    double operand2;//運算的第二個數字
+    double result;
     /**
      * The available operators of the calculator.
      */
@@ -32,34 +35,64 @@ public class Calculator {
         MEM_MINUS,   // M-
         MEM_RECALL   // MR
     }
-    
-    public void appendDigit(int digit) {
-        // TODO code application logic here
+    //輸入數字
+    //digit 0-9
+    public void appendDigit(String opr) {
+         if(!opr.equals("")){
+            if(operator==0){
+                operand1=Double.valueOf(opr);
+            }else{
+                operand2=Double.valueOf(opr);
+            }
+        }
     }
-    
+    //輸入點號
     public void appendDot() {
         // TODO code application logic here
     }
-    
-    public void performOperation(Operator operator) {
-        // TODO code application logic here
+    //選擇運算+-*/
+    public void performOperation(int operator) {
+        this.operator = operator;
     }
-    
-    public String getDisplay() {
-        // TODO code application logic here
-        return null;
+    //取得顯示畫面的資訊
+    public double getDisplay() {
+        return result;
+    }
+    //設定顯示
+    public void setDisplay(double hasil) {
+        this.result = hasil;
+    }
+    //選擇運算方法
+ public void process(){
+        switch (operator){
+            case 1:
+                result = operand1 + operand2;
+                break;
+            case 2:
+                result = operand1 - operand2;
+                break;
+            case 3:
+                result = operand1 * operand2;
+                break;
+            case 4:
+                result = operand1 / operand2;
+                break;
+            case 5:
+                result = operand1 % operand2;
+                break;
+            case 6:
+                result = 1/operand1;
+                break;
+            case 7:
+                result = Math.sqrt(operand1);
+                break;
+            case 8:
+                result = -operand1;
+                break;    
+        }
+        operand1=result;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Window window = new Window();
-        Model model = new Model();
-        Controller controller = new Controller(model);
-       controller.readInput();
-        
-        
-    }
+    
 
 }

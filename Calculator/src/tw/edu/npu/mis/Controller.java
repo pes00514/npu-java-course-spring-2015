@@ -5,20 +5,20 @@
  */
 package tw.edu.npu.mis;
 
-import java.util.Scanner;
+
 
 /**
  *
  * @author user
  */
 public class Controller {
-    private final Model mModel;
+    private final Calculator mModel;
 /**
  * Controller Constructors
  *  let Controller know Model method and attribute
      * @param model 傳入Model類別
  */
-    public Controller(Model model) {
+    public Controller(Calculator model) {
         mModel = model;
     }
 
@@ -26,6 +26,16 @@ public class Controller {
      * Read input and update model accordingly.
      */
     public void readInput() {
-        new CalculatorView().setVisible(true);
+        
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+       new CalculatorView().setVisible(true);
+        
+        
     }
 }
