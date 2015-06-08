@@ -26,6 +26,11 @@ public class Controller {
      * Read input and update model accordingly.
      */
     public void readInput() {
-        new CalculatorView().setVisible(true);
+        System.out.print("Controller: ");
+        Scanner s = new Scanner(System.in);
+        String input = s.nextLine().trim();
+        if (!input.isEmpty()) {
+            mModel.setData(input);
+        }
     }
 }
