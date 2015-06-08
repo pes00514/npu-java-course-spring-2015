@@ -31,27 +31,55 @@ package tw.edu.npu.mis;
  * @author Samael Wang <freesamael@gmail.com>
  */
 public class Model extends Subject{
+int operator=0;
+    double operand1;
+    double operand2;
+    double result;
 
-    private String mData;
-
-    /**
-     * Get model content.
-     *傳出內容
-     * @return {@link String}
-     */
-    public String getData() {
-        return mData;
+    public void setOperand(String opr) {
+        if(!opr.equals("")){
+            if(operator==0){
+                operand1=Double.valueOf(opr);
+            }else{
+                operand2=Double.valueOf(opr);
+            }
+        }
     }
 
-    /**
-     * Update model.
-     *顯示資料
-     * 檢查有沒有內容
-     * @param data A {@link String} data.
-     */
-    public void setData(String data) {
-        mData = data;
-        this.notifyObserver();
+    public void setOperator(int operator) {
+        this.operator = operator;
+    }
+
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double hasil) {
+        this.result = hasil;
+    }
+   
+    public void process(){
+        switch (operator){
+            case 1:
+                result = operand1 + operand2;
+                break;
+            case 2:
+                result = operand1 - operand2;
+                break;
+            case 3:
+                result = operand1 * operand2;
+                break;
+            case 4:
+                result = operand1 / operand2;
+                break;
+            case 5:
+                result = operand1 % operand2;
+                break;
+            case 6:
+                result = 1/operand1;
+                break;
+        }
+        operand1=result;
     }
 
   
