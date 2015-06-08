@@ -5,19 +5,19 @@
  */
 package tw.edu.npu.mis;
 
-
-
 /**
  *
  * @author user
  */
 public class Controller {
+
     private final Calculator mModel;
-/**
- * Controller Constructors
- *  let Controller know Model method and attribute
+
+    /**
+     * Controller Constructors let Controller know Model method and attribute
+     *
      * @param model 傳入Model類別
- */
+     */
     public Controller(Calculator model) {
         mModel = model;
     }
@@ -26,16 +26,15 @@ public class Controller {
      * Read input and update model accordingly.
      */
     public void readInput() {
-        
+
     }
-    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-       new CalculatorView().setVisible(true);
-        
-        
+
+        new CalculatorView().setVisible(true);
+
     }
 }

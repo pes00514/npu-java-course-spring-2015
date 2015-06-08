@@ -219,9 +219,6 @@
             <Property name="text" type="java.lang.String" value="&#x2190;"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="&#x2190;"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button12ActionPerformed"/>
           </Events>
