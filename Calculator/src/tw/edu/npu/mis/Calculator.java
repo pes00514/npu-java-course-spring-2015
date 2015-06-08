@@ -54,11 +54,12 @@ public class Calculator {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CalculatorView().setVisible(true);
-            }
-        });
+        Window window = new Window();
+        Model model = new Model();
+        Controller controller = new Controller(model);
+       controller.readInput();
+        
+        
     }
 
 }
