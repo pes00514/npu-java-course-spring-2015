@@ -9,7 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
+ * CalculatorView
  * @author STP
  */
 public class CalculatorView extends javax.swing.JFrame implements Observer {
@@ -18,7 +18,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
     String operand = "";//輸入的數字
 
     /**
-     * VIEW 建立的時候，就把 MODEL (Calculator) 帶進來 Creates new form CalculatorView
+     * VIEW 建立的時候，就把 MODEL (Calculator) 帶進來
      *
      * @param title View標題
      * @param c MODEL (Calculator)
@@ -279,8 +279,6 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
                     .addComponent(button12, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        button12.getAccessibleContext().setAccessibleName("←");
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
 

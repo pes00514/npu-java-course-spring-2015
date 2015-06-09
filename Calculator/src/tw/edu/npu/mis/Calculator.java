@@ -15,7 +15,7 @@ public class Calculator extends Observable {
     int operator = 0;//數字
     double operand1;//運算的第一個數字
     double operand2;//運算的第二個數字
-    double result;//放結果
+    double result;//放畫面顯示的數字
 
     /**
      * The available operators of the calculator.
@@ -50,8 +50,10 @@ public class Calculator extends Observable {
         if (!opr.equals("")) {//是否為""
             if (operator == 0) {//判斷是否有運算符號
                 operand1 = Double.valueOf(opr);//沒有則放第一個數字
+                result = operand1;
             } else {
                 operand2 = Double.valueOf(opr);//有則放第二個數字
+                result = operand2;
             }
             setChanged();
             notifyObservers();
@@ -73,8 +75,7 @@ public class Calculator extends Observable {
      */
     public void performOperation(int operator) {
         this.operator = operator;
-        setChanged();
-        notifyObservers();
+
     }
 
     /**

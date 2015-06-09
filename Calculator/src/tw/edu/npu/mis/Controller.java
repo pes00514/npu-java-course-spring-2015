@@ -16,7 +16,8 @@ public class Controller {
      */
     public static void main(String[] args) {
         Calculator mModel = new Calculator();
-        new CalculatorView("view1", mModel).setVisible(true);
-        new CalculatorView("view2", mModel).setVisible(true);
+        new CalculatorView("Simple Calculator", mModel).setVisible(true);
+        //測試Model通知View
+        //new CalculatorView("view2", mModel).setVisible(true);
     }
 }
