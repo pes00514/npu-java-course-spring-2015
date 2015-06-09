@@ -11,23 +11,12 @@ package tw.edu.npu.mis;
  */
 public class Controller {
 
-    private final Calculator mModel;
-
-    /**
-     * Controller Constructors let Controller know Model method and attribute
-     *
-     * @param model 傳入Model類別
-     */
-    public Controller(Calculator model) {
-        mModel = model;
-    }
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-        new CalculatorView().setVisible(true);
-
+        Calculator mModel = new Calculator();
+        new CalculatorView("view1", mModel).setVisible(true);
+        new CalculatorView("view2", mModel).setVisible(true);
     }
 }

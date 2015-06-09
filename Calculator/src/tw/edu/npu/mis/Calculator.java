@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package tw.edu.npu.mis;
+
 import java.util.Observable;
+
 /**
  * The model class of the calculator application.
  */
-public class Calculator extends Observable{
+public class Calculator extends Observable {
 
     int operator = 0;//數字
     double operand1;//運算的第一個數字
@@ -51,7 +53,10 @@ public class Calculator extends Observable{
             } else {
                 operand2 = Double.valueOf(opr);//有則放第二個數字
             }
+            setChanged();
+            notifyObservers();
         }
+
     }
 
     /**
@@ -68,6 +73,8 @@ public class Calculator extends Observable{
      */
     public void performOperation(int operator) {
         this.operator = operator;
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -86,6 +93,8 @@ public class Calculator extends Observable{
      */
     public void setDisplay(double hasil) {
         this.result = hasil;
+        setChanged();
+        notifyObservers();
     }
 
     //
@@ -120,6 +129,8 @@ public class Calculator extends Observable{
                 break;
         }
         operand1 = result;//將計算結果放到第一個數字
+        setChanged();
+        notifyObservers();
     }
 
 }
