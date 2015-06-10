@@ -7,15 +7,19 @@ package tw.edu.npu.mis;
 import java.text.DecimalFormat;
 import java.util.Observable;
 import java.util.Observer;
+import tw.edu.npu.mis.Calculator.Operator;
 
 /**
  * CalculatorView
+ *
  * @author STP
  */
 public class CalculatorView extends javax.swing.JFrame implements Observer {
 
-    Calculator model = new Calculator();
-    String operand = "";//輸入的數字
+    private static final int INITIAL_VALUE = 0;
+    private static final String SHOW_MEM = "M";
+    private Calculator mModel = new Calculator();
+    private String mOperand = "";//輸入的數字
 
     /**
      * VIEW 建立的時候，就把 MODEL (Calculator) 帶進來
@@ -26,14 +30,19 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
     public CalculatorView(String title, Calculator c) {
         initComponents();
         setTitle(title);
-        model = c;
+        mModel = c;
         //增加一個內名類別 Observer$1 來觀察 Calculator.
-        model.addObserver(new Observer() {
+        mModel.addObserver(new Observer() {
 
             @Override
             public void update(Observable o, Object arg) {
-                if (o instanceof Calculator && o == model) {
+                if (o instanceof Calculator && o == mModel) {
                     resultLabel.setText(((Calculator) o).getDisplay() + "");
+                    if (((Calculator) o).getMemorize() == INITIAL_VALUE) {//沒有記憶數字，則不顯示M
+                        memLabel.setText("");
+                    } else {
+                        memLabel.setText(SHOW_MEM);
+                    }
                 }
             }
         });
@@ -51,29 +60,40 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param button 數字的button
      */
     public void getOperand(javax.swing.JButton button) {
-        operand += button.getText();
-        model.appendDigit(operand);
-        resultLabel.setText(operand);
+        mOperand += button.getText();
+        mModel.appendDigit(mOperand);
+        resultLabel.setText(mOperand);
     }
 
     /**
      * 取得運算符號
      *
-     * @param opt 運算符號的代號
+     * @param opt 運算符號的名稱
      */
-    private void getOperator(int opt) {
-        model.performOperation(opt);
-        operand = "";
+    private void getOperator(Operator opt) {
+        mModel.performOperation(opt);
+        mOperand = "";
     }
 
     /**
      * 按下=的方法
      */
     private void process() {
-        DecimalFormat df = new DecimalFormat("#,###.########");
-        model.process();
-        operand = "";
-        resultLabel.setText(df.format(model.getDisplay()) + "");
+        DecimalFormat mFormat = new DecimalFormat("#,###.########");
+        mModel.process();
+        mOperand = "";
+        resultLabel.setText(mFormat.format(mModel.getDisplay()) + "");
+    }
+/**
+ * 按下M類按鍵的方法
+ * @param opt 
+ */
+    private void memorize(Operator opt) {
+        mModel.performOperation(opt);
+        mModel.memorize();
+        mOperand = "";
+        resultLabel.setText(INITIAL_VALUE + "");
+        memLabel.setText(SHOW_MEM);
     }
 
     @SuppressWarnings("unchecked")
@@ -82,6 +102,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
 
         jPanel1 = new javax.swing.JPanel();
         resultLabel = new javax.swing.JLabel();
+        memLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         button7 = new javax.swing.JButton();
         button4 = new javax.swing.JButton();
@@ -100,13 +121,20 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
         buttonKali = new javax.swing.JButton();
         buttonKurang = new javax.swing.JButton();
         buttonTambah = new javax.swing.JButton();
-        buttonAC = new javax.swing.JButton();
-        buttonModulus = new javax.swing.JButton();
+        buttonCE = new javax.swing.JButton();
         buttonSeper = new javax.swing.JButton();
         buttonSamaDengan = new javax.swing.JButton();
         buttonSqrt = new javax.swing.JButton();
         buttonSymbol = new javax.swing.JButton();
         buttonClear = new javax.swing.JButton();
+        buttonPercentage = new javax.swing.JButton();
+        buttonModulus = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple Calculator");
@@ -122,15 +150,19 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(resultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(memLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(resultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(resultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(resultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(memLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -282,14 +314,14 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 204));
 
-        buttonBagi.setText("/");
+        buttonBagi.setText("÷");
         buttonBagi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonBagiActionPerformed(evt);
             }
         });
 
-        buttonKali.setText("*");
+        buttonKali.setText("×");
         buttonKali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonKaliActionPerformed(evt);
@@ -310,17 +342,10 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
             }
         });
 
-        buttonAC.setText("AC");
-        buttonAC.addActionListener(new java.awt.event.ActionListener() {
+        buttonCE.setText("CE");
+        buttonCE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonACActionPerformed(evt);
-            }
-        });
-
-        buttonModulus.setText("%");
-        buttonModulus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonModulusActionPerformed(evt);
+                buttonCEActionPerformed(evt);
             }
         });
 
@@ -360,62 +385,150 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
             }
         });
 
+        buttonPercentage.setText("%");
+        buttonPercentage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPercentageActionPerformed(evt);
+            }
+        });
+
+        buttonModulus.setText("mod");
+        buttonModulus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonModulusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSamaDengan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonSamaDengan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(buttonKurang, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonSeper)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(buttonKali, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonModulus, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(buttonPercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(buttonBagi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonAC)))
+                                .addComponent(buttonModulus)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(buttonSqrt, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                            .addComponent(buttonClear, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))))
-                .addGap(0, 18, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(buttonSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(buttonCE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonBagi, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonAC, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonBagi, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonModulus, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonCE, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonKali, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonModulus, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonKurang, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonSeper, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonKali, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonPercentage, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonKurang, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonSeper, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonSymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(buttonClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonSamaDengan, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                .addContainerGap())
+        );
+
+        jPanel4.setBackground(new java.awt.Color(204, 255, 204));
+
+        jButton1.setText("MS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("MC");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("MR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("M+");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("M-");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -424,24 +537,27 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -524,7 +640,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
-        getOperator(1);
+        getOperator(Operator.PLUS);
     }//GEN-LAST:event_buttonTambahActionPerformed
     /**
      * 按下按鍵-的事件
@@ -532,7 +648,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonKurangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKurangActionPerformed
-        getOperator(2);
+        getOperator(Operator.MINUS);
     }//GEN-LAST:event_buttonKurangActionPerformed
     /**
      * 按下按鍵*的事件
@@ -540,7 +656,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonKaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKaliActionPerformed
-        getOperator(3);
+        getOperator(Operator.TIMES);
     }//GEN-LAST:event_buttonKaliActionPerformed
     /**
      * 按下按鍵/的事件
@@ -548,15 +664,15 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonBagiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBagiActionPerformed
-        getOperator(4);
+        getOperator(Operator.OVER);
     }//GEN-LAST:event_buttonBagiActionPerformed
     /**
-     * 按下按鍵%的事件
+     * 按下按鍵mod的事件
      *
      * @param evt
      */
     private void buttonModulusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModulusActionPerformed
-        getOperator(5);
+        getOperator(Operator.MOD);
     }//GEN-LAST:event_buttonModulusActionPerformed
     /**
      * 按下按鍵1/x的事件
@@ -564,7 +680,8 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonSeperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSeperActionPerformed
-        getOperator(6);
+        getOperator(Operator.RECIPROCAL);
+        process();
     }//GEN-LAST:event_buttonSeperActionPerformed
     /**
      * 按下按鍵=的事件
@@ -596,14 +713,14 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
-        if (operand.length() > 1) {
-            operand = operand.substring(0, operand.length() - 1);
-            model.appendDigit(operand);
-            resultLabel.setText(operand);
+        if (mOperand.length() > 1) {
+            mOperand = mOperand.substring(INITIAL_VALUE, mOperand.length() - 1);
+            mModel.appendDigit(mOperand);
+            resultLabel.setText(mOperand);
         } else {
-            operand = "";
-            model.appendDigit(operand);
-            resultLabel.setText("0");
+            mOperand = "";
+            mModel.appendDigit(mOperand);
+            resultLabel.setText(INITIAL_VALUE + "");
         }
     }//GEN-LAST:event_button12ActionPerformed
     /**
@@ -611,12 +728,12 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      *
      * @param evt
      */
-    private void buttonACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonACActionPerformed
-        operand = "";
-        model.performOperation(0);
-        model.setDisplay(0);
-        resultLabel.setText("0");
-    }//GEN-LAST:event_buttonACActionPerformed
+    private void buttonCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCEActionPerformed
+        mOperand = "";
+        mModel.performOperation(Operator.NULL);
+        mModel.setDisplay(0);
+        resultLabel.setText(INITIAL_VALUE + "");
+    }//GEN-LAST:event_buttonCEActionPerformed
 
     /**
      * 按下按鍵√的事件
@@ -624,7 +741,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSqrtActionPerformed
-        getOperator(7);
+        getOperator(Operator.SQRT);
         process();
     }//GEN-LAST:event_buttonSqrtActionPerformed
 
@@ -634,7 +751,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonSymbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSymbolActionPerformed
-        getOperator(8);
+        getOperator(Operator.PLUS_MINUS);
         process();
     }//GEN-LAST:event_buttonSymbolActionPerformed
     /**
@@ -643,10 +760,62 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * @param evt
      */
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
-        operand = "";
-        model.setDisplay(0);
-        resultLabel.setText("0");
+        mOperand = "";
+        mModel.setDisplay(INITIAL_VALUE);
+        resultLabel.setText(INITIAL_VALUE + "");
     }//GEN-LAST:event_buttonClearActionPerformed
+    /**
+     * 按下按鍵%的事件
+     *
+     * @param evt
+     */
+    private void buttonPercentageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPercentageActionPerformed
+        mModel.setPercentage();
+
+    }//GEN-LAST:event_buttonPercentageActionPerformed
+    /**
+     * 按下按鍵MC的事件
+     *
+     * @param evt
+     */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        memorize(Operator.MEM_CLEAR);
+        memLabel.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+    /**
+     * 按下按鍵MR的事件
+     *
+     * @param evt
+     */
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        memorize(Operator.MEM_RECALL);
+        resultLabel.setText(mModel.getDisplay()+"");
+    }//GEN-LAST:event_jButton3ActionPerformed
+    /**
+     * 按下按鍵M+的事件
+     *
+     * @param evt
+     */
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        memorize(Operator.MEM_PLUS);
+    }//GEN-LAST:event_jButton4ActionPerformed
+    /**
+     * 按下按鍵M-的事件
+     *
+     * @param evt
+     */
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        memorize(Operator.MEM_MINUS);
+    }//GEN-LAST:event_jButton5ActionPerformed
+    /**
+     * 按下按鍵MS的事件
+     *
+     * @param evt
+     */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        memorize(Operator.MEM_SET);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button1;
@@ -660,21 +829,29 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton button7;
     private javax.swing.JButton button8;
     private javax.swing.JButton button9;
-    private javax.swing.JButton buttonAC;
     private javax.swing.JButton buttonBagi;
+    private javax.swing.JButton buttonCE;
     private javax.swing.JButton buttonClear;
     private javax.swing.JButton buttonDot;
     private javax.swing.JButton buttonKali;
     private javax.swing.JButton buttonKurang;
     private javax.swing.JButton buttonModulus;
+    private javax.swing.JButton buttonPercentage;
     private javax.swing.JButton buttonSamaDengan;
     private javax.swing.JButton buttonSeper;
     private javax.swing.JButton buttonSqrt;
     private javax.swing.JButton buttonSymbol;
     private javax.swing.JButton buttonTambah;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel memLabel;
     private javax.swing.JLabel resultLabel;
     // End of variables declaration//GEN-END:variables
 

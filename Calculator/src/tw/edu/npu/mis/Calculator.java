@@ -11,14 +11,15 @@ import java.util.Observable;
  * The model class of the calculator application.
  */
 public class Calculator extends Observable {
-
-    int operator = 0;//數字
-    double operand1;//運算的第一個數字
-    double operand2;//運算的第二個數字
-    double result;//放畫面顯示的數字
+    private static final int INITIAL_VALUE = 0;
+    private Operator mOperator = Operator.NULL;//數字
+    private double mOperand1;//運算的第一個數字
+    private double mOperand2;//運算的第二個數字
+    private double mResult;//放畫面顯示的數字
+    private double mMemorize;//記憶
 
     /**
-     * The available operators of the calculator.
+     * The available mOperators of the calculator.
      */
     public enum Operator {
 
@@ -38,7 +39,9 @@ public class Calculator extends Observable {
         MEM_SET, // MS
         MEM_PLUS, // M+
         MEM_MINUS, // M-
-        MEM_RECALL   // MR
+        MEM_RECALL, // MR
+        MOD, //mod
+        NULL //沒有運算符號
     }
 
     /**
@@ -48,12 +51,12 @@ public class Calculator extends Observable {
      */
     public void appendDigit(String opr) {
         if (!opr.equals("")) {//是否為""
-            if (operator == 0) {//判斷是否有運算符號
-                operand1 = Double.valueOf(opr);//沒有則放第一個數字
-                result = operand1;
+            if (mOperator == Operator.NULL) {//判斷是否有運算符號
+                mOperand1 = Double.valueOf(opr);//沒有則放第一個數字
+                mResult = mOperand1;
             } else {
-                operand2 = Double.valueOf(opr);//有則放第二個數字
-                result = operand2;
+                mOperand2 = Double.valueOf(opr);//有則放第二個數字
+                mResult = mOperand2;
             }
             setChanged();
             notifyObservers();
@@ -71,10 +74,10 @@ public class Calculator extends Observable {
     /**
      * 選擇運算符號
      *
-     * @param operator 運算符號的代表號碼
+     * @param Operator 運算符號的名稱
      */
-    public void performOperation(int operator) {
-        this.operator = operator;
+    public void performOperation(Operator Operator) {
+        this.mOperator = Operator;
 
     }
 
@@ -84,7 +87,20 @@ public class Calculator extends Observable {
      * @return 畫面上的數字
      */
     public double getDisplay() {
-        return result;
+        return mResult;
+    }
+    /**
+     * 取得記憶的值
+     * @return 記憶的值
+     */
+public double getMemorize(){
+    return mMemorize;
+}
+    /**
+     * 按下按鍵%後，以第一個數字的百分比做第二個數字
+     */
+    public void setPercentage() {
+        mOperand2 = mOperand1 * (mOperand2 / 100);
     }
 
     /**
@@ -93,7 +109,7 @@ public class Calculator extends Observable {
      * @param hasil 預設定的值
      */
     public void setDisplay(double hasil) {
-        this.result = hasil;
+        this.mResult = hasil;
         setChanged();
         notifyObservers();
     }
@@ -103,35 +119,61 @@ public class Calculator extends Observable {
      * 選擇運算方法
      */
     public void process() {
-        switch (operator) {
-            case 1://做加法
-                result = operand1 + operand2;
+        switch (mOperator) {
+            case PLUS://做加法
+                mResult = mOperand1 + mOperand2;
                 break;
-            case 2://減法
-                result = operand1 - operand2;
+            case MINUS://減法
+                mResult = mOperand1 - mOperand2;
                 break;
-            case 3://乘法
-                result = operand1 * operand2;
+            case TIMES://乘法
+                mResult = mOperand1 * mOperand2;
                 break;
-            case 4://除法
-                result = operand1 / operand2;
+            case OVER://除法
+                mResult = mOperand1 / mOperand2;
                 break;
-            case 5://算餘數
-                result = operand1 % operand2;
+            case MOD://算餘數
+                mResult = mOperand1 % mOperand2;
                 break;
-            case 6://算1/x
-                result = 1 / operand1;
+            case RECIPROCAL://算1/x
+                mResult = 1 / mOperand1;
                 break;
-            case 7://開根號
-                result = Math.sqrt(operand1);
+            case SQRT://開根號
+                mResult = Math.sqrt(mOperand1);
                 break;
-            case 8://正負號
-                result = -operand1;
+            case PLUS_MINUS://正負號
+                mResult = -mOperand1;
                 break;
         }
-        operand1 = result;//將計算結果放到第一個數字
+        mOperand1 = mResult;//將計算結果放到第一個數字
         setChanged();
         notifyObservers();
     }
-
+/**
+ * 選擇M類該做的事
+ */
+    public void memorize() {
+        switch (mOperator) {
+            case MEM_CLEAR:// MC
+                mMemorize = INITIAL_VALUE;
+                break;
+            case MEM_SET: // MS
+                mMemorize = mResult;
+                break;
+            case MEM_PLUS: // M+
+                mMemorize += mResult;
+                break;
+            case MEM_MINUS: // M-
+                mMemorize -= mResult;
+                break;
+            case MEM_RECALL://MR
+                mResult=mMemorize;
+                break;
+        }
+        mOperand1 = mResult;//將顯示數字放到第一個數字
+        if(mOperator != Operator.MEM_RECALL)//不是MR則不用清除顯示
+            mResult=INITIAL_VALUE;
+        setChanged();
+        notifyObservers();
+    }
 }
