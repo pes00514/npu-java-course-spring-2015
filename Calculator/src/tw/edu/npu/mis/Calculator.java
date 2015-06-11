@@ -12,7 +12,7 @@ import java.util.Observable;
  */
 public class Calculator extends Observable {
     private static final int INITIAL_VALUE = 0;
-    private Operator mOperator = Operator.NULL;//數字
+    private Operator mOperator = Operator.NULL;//運算
     private double mOperand1;//運算的第一個數字
     private double mOperand2;//運算的第二個數字
     private double mResult;//放畫面顯示的數字
@@ -62,13 +62,6 @@ public class Calculator extends Observable {
             notifyObservers();
         }
 
-    }
-
-    /**
-     * 輸入點號
-     */
-    public void appendDot() {
-        // TODO code application logic here
     }
 
     /**

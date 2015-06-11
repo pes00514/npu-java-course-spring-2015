@@ -15,7 +15,7 @@ import tw.edu.npu.mis.Calculator.Operator;
  * @author STP
  */
 public class CalculatorView extends javax.swing.JFrame implements Observer {
-
+    private DecimalFormat mFormat = new DecimalFormat("#,###.########");//格式
     private static final int INITIAL_VALUE = 0;
     private static final String SHOW_MEM = "M";
     private Calculator mModel = new Calculator();
@@ -37,7 +37,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
             @Override
             public void update(Observable o, Object arg) {
                 if (o instanceof Calculator && o == mModel) {
-                    resultLabel.setText(((Calculator) o).getDisplay() + "");
+                    resultLabel.setText(mFormat.format(((Calculator) o).getDisplay()) + "");
                     if (((Calculator) o).getMemorize() == INITIAL_VALUE) {//沒有記憶數字，則不顯示M
                         memLabel.setText("");
                     } else {
@@ -79,7 +79,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      * 按下=的方法
      */
     private void process() {
-        DecimalFormat mFormat = new DecimalFormat("#,###.########");
+        
         mModel.process();
         mOperand = "";
         resultLabel.setText(mFormat.format(mModel.getDisplay()) + "");
@@ -789,7 +789,7 @@ public class CalculatorView extends javax.swing.JFrame implements Observer {
      */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         memorize(Operator.MEM_RECALL);
-        resultLabel.setText(mModel.getDisplay()+"");
+        resultLabel.setText(mFormat.format(mModel.getDisplay())+"");
     }//GEN-LAST:event_jButton3ActionPerformed
     /**
      * 按下按鍵M+的事件
